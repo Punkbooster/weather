@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { fetchWeather } from '../actions/index'
 
-export default class SeachBar extends Component {
+class SearchBar extends Component {
   constructor(props) {
     super(props)
 
@@ -14,6 +14,7 @@ export default class SeachBar extends Component {
 
     // in other words bind onInputChange to the context of this & replace existing function
     this.onInputChange = this.onInputChange.bind(this)
+    this.onFormSubmit = this.onFormSubmit.bind(this)
   }
 
   onInputChange(event) {
@@ -25,6 +26,8 @@ export default class SeachBar extends Component {
     event.preventDefault()
 
     // we need to go and fetch weather data
+    this.props.fetchWeather(this.state.term)
+    this.setState({ term: '' })
   }
 
   render() {
@@ -43,3 +46,11 @@ export default class SeachBar extends Component {
     )
   }
 }
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ fetchWeather }, dispatch)
+}
+
+// on a place of null argument usualy passed a state
+// but in this case we don't need it
+export default connect(null, mapDispatchToProps)(SearchBar)
