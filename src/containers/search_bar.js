@@ -9,7 +9,7 @@ export default class SeachBar extends Component {
     // this line will make sure this context of the onInputChange is the same
     // as in our component (so we have this.setState function)
 
-    // in other words bind onInputChange to the context of this
+    // in other words bind onInputChange to the context of this & replace existing function
     this.onInputChange = this.onInputChange.bind(this)
   }
 
@@ -18,9 +18,13 @@ export default class SeachBar extends Component {
     this.setState({ term: event.target.value })
   }
 
+  onFormSubmit(event) {
+    event.preventDefault()
+  }
+
   render() {
     return (
-      <form className='input-group'>
+      <form onSubmit={this.onFormSubmit} className='input-group'>
         <input
           placeholder='Get a five day forecast in Your favourite cities'
           className='form-control'
